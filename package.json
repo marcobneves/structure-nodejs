@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "marko": "^4.18.28"
+    "marko": "^4.18.28",
+    "sqlite": "^3.0.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

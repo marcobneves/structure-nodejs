@@ -1,3 +1,5 @@
+const db = require('../../config/database')
+
 const Routes = (app) => {
 
     app.get('/', function (req, resp) {
@@ -5,14 +7,13 @@ const Routes = (app) => {
     })
 
     app.get('/livros', function (req, resp) {
-        resp.marko(
-            require('../views/books/list/list.marko'), {
-            livros: [
-                { id: 1, titulo: 'Trabalhando com css' },
-                { id: 2, titulo: 'Trabalhando com Js' },
-            ]
-        }
-        )
+        db.all('SELECT * FROM LIVROS', function (erro, response) {
+            resp.marko(
+                require('../views/books/list/list.marko'), {
+                livros: response
+            }
+            )
+        })
     })
 }
 
