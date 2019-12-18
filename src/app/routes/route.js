@@ -10,13 +10,13 @@ const Routes = (app) => {
     app.get('/books', (req, resp) => {
         const book = new Book(db)
 
-        book.list((erro, response) => {
-            resp.marko(
+        book.list()
+            .then(data => resp.marko(
                 require('../views/books/list/list.marko'), {
-                books: response
+                books: data
             }
-            )
-        })
+            ))
+            .catch(erro => console.log(erro))
 
     })
 }
