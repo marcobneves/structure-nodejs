@@ -1,19 +1,23 @@
+const Book = require('../entity/book')
 const db = require('../../config/database')
 
 const Routes = (app) => {
 
-    app.get('/', function (req, resp) {
+    app.get('/', (req, resp) => {
         resp.send(`Route: ${req.url} Method: ${req.method}`)
     })
 
-    app.get('/livros', function (req, resp) {
-        db.all('SELECT * FROM LIVROS', function (erro, response) {
+    app.get('/books', (req, resp) => {
+        const book = new Book(db)
+
+        book.list((erro, response) => {
             resp.marko(
                 require('../views/books/list/list.marko'), {
-                livros: response
+                books: response
             }
             )
         })
+
     })
 }
 
