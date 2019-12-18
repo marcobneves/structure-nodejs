@@ -19,6 +19,18 @@ const Routes = (app) => {
             .catch(erro => console.log(erro))
 
     })
+
+    app.get('/book/form', (req, resp) => {
+        resp.marko(require('../views/books/form/form.marko'))
+    })
+
+    app.post('/book', (req, resp) => {
+        console.log('body', req.body)
+        var book = new Book(db)
+        book.save(req.body)
+            .then(resp.redirect('/books'))
+            .catch(erro => console.log(erro))
+    })
 }
 
 module.exports = Routes;
