@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-part1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js --ignore *.marko.js"
+  },
+  "author": "Marco Barroso",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "marko": "^4.18.28"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
