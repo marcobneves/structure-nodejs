@@ -20,17 +20,48 @@ const Routes = (app) => {
 
     })
 
+    app.get('/book/form/:id', (req, resp) => {
+        let bookId = req.params.id
+        const book = new Book(db)
+
+        book.search(bookId)
+            .then(data => {
+                resp.marko(require('../views/books/form/form.marko'),
+                    { book: data[0] })
+            })
+            .catch(erro => console.log(erro))
+
+    })
+
     app.get('/book/form', (req, resp) => {
-        resp.marko(require('../views/books/form/form.marko'))
+        resp.marko(require('../views/books/form/form.marko'), { book: {titulo:'', preco:'', descricao:''} })
     })
 
     app.post('/book', (req, resp) => {
-        console.log('body', req.body)
         var book = new Book(db)
         book.save(req.body)
             .then(resp.redirect('/books'))
             .catch(erro => console.log(erro))
     })
+
+    app.put('/book', (req, resp) => {
+        var book = new Book(db)
+        book.update(req.body)
+            .then(resp.redirect('/books'))
+            .catch(erro => console.log(erro))
+    })
+
+    app.delete('/book/:id', (req, resp) => {
+        
+        const bookId = req.params.id
+
+        const book = new Book(db)
+        book.remove(bookId)
+            .then(() => resp.status(200).end())
+            .catch(erro => { console.log(erro) })
+
+    })
+
 }
 
 module.exports = Routes;

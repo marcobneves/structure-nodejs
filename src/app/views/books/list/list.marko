@@ -1,18 +1,26 @@
 <html>
     <body>
-        <table>
+        <table id="books">
             <thead>
                 <tr>
                     <td>ID</td>
                     <td>TITLE</td>
+                    <td>PRICE</td>
+                    <td>DESCRIPTION</td>
+                    <td>ACTION</td>
                 </tr>
             </thead>
             <tbody>
-                <tr for(book in data.books)>
+                <tr id="livro_${book.id}" for(book in data.books)>
                     <td>${book.id}</td>
                     <td>${book.titulo}</td>
+                    <td>${book.preco}</td>
+                    <td>${book.descricao}</td>
+                    <td><a href="#" data-ref="${book.id}" data-type="remove">Remove</a></td>
+                    <td><a href="/book/form/${book.id}" data-ref="${book.id}" data-type="edit">Edit</a></td>
                 </tr>
             </tbody>
         </table>
+    <script src='/static/js/remove.js'></script>
     </body>
 </html>

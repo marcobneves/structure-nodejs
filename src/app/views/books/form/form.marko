@@ -2,18 +2,22 @@
     <body>
         <h1>Add books</h1>
         <form action="/book" method="post">
-            <input type="hidden" name="id"/>
+
+            <div if(data.book.id)>
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="id" value="${data.book.id}"/>
+            </div>
             <div>
                 <label>Title</label>
-                <input type="text" name="title" placeholder="Add Title"/>
+                <input type="text" name="title" placeholder="Add Title" value="${data.book.titulo}"/>
             </div>
             <div>
                 <label>Price</label>
-                <input type="text" name="price" placeholder="Add Price"/>
+                <input type="text" name="price" placeholder="Add Price" value="${data.book.preco}"/>
             </div>
             <div>
                 <label>Description</label>
-                <textarea name="description" rows="8" cols="40"/>
+                <textarea name="description" value="${data.book.descricao}" rows="8" cols="40"/>
             </div>
             <input type="submit" value="Save book"/>
         </form>

@@ -11,6 +11,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
+    marko_attr = marko_helpers.a,
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
@@ -21,25 +22,36 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<table><thead><tr><td>ID</td><td>TITLE</td></tr></thead><tbody>");
+  out.w("<table id=\"books\"><thead><tr><td>ID</td><td>TITLE</td><td>PRICE</td><td>DESCRIPTION</td><td>ACTION</td></tr></thead><tbody>");
 
   var $for$0 = 0;
 
   marko_forEach(data.books, function(book) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
-    out.w("<tr><td>" +
+    out.w("<tr" +
+      marko_attr("id", "livro_" + book.id) +
+      "><td>" +
       marko_escapeXml(book.id) +
       "</td><td>" +
       marko_escapeXml(book.titulo) +
-      "</td></tr>");
+      "</td><td>" +
+      marko_escapeXml(book.preco) +
+      "</td><td>" +
+      marko_escapeXml(book.descricao) +
+      "</td><td><a href=\"#\"" +
+      marko_attr("data-ref", "" + book.id) +
+      " data-type=\"remove\">Remove</a></td><td><a" +
+      marko_attr("href", "/book/form/" + book.id) +
+      marko_attr("data-ref", "" + book.id) +
+      " data-type=\"edit\">Edit</a></td></tr>");
   });
 
-  out.w("</tbody></table>");
+  out.w("</tbody></table><script src=\"/static/js/remove.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "11");
+  await_reorderer_tag({}, out, __component, "20");
 
   out.w("</body></html>");
 }
