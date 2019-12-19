@@ -1,5 +1,6 @@
 const Book = require('../entity/book')
 const db = require('../../config/database')
+const { check, validationResult } = require('express-validator');
 
 const Routes = (app) => {
 
@@ -34,10 +35,20 @@ const Routes = (app) => {
     })
 
     app.get('/book/form', (req, resp) => {
-        resp.marko(require('../views/books/form/form.marko'), { book: {titulo:'', preco:'', descricao:''} })
+        resp.marko(require('../views/books/form/form.marko'), { book: { titulo: '', preco: '', descricao: '' } })
     })
 
-    app.post('/book', (req, resp) => {
+    app.post('/book', [
+        check("title").isLength({ min: 5 }).withMessage("Titulo deve ter mínino de 5 caracteres"),
+        check("price").isCurrency().withMessage("Preço inválido")
+    ], (req, resp) => {
+
+        const erros = validationResult(req)
+        console.log('error', erros)
+        if (!erros.isEmpty()) {
+            return resp.marko(require('../views/books/form/form.marko'), { book: { titulo: '', preco: '', descricao: '' } })
+        }
+
         var book = new Book(db)
         book.save(req.body)
             .then(resp.redirect('/books'))
@@ -52,7 +63,7 @@ const Routes = (app) => {
     })
 
     app.delete('/book/:id', (req, resp) => {
-        
+
         const bookId = req.params.id
 
         const book = new Book(db)
