@@ -1,0 +1,22 @@
+version: '3'
+services: 
+    node:
+      build:
+        dockerfile: ./config/Dockerfile
+        context: .
+      image: marcobneves/node-server
+      container_name: app-nodejs
+      ports: 
+        - "3000:3000"
+      networks: 
+        - my-network
+
+    # Implement db
+    # Implement other services
+
+networks: 
+  my-network:
+    driver: bridge
+
+
+
