@@ -4,8 +4,8 @@ services:
       build:
         dockerfile: ./config/Dockerfile
         context: .
-      image: marcobneves/node-server
-      container_name: app-nodejs
+      image: marcobneves/node-application
+      container_name: node-application
       ports: 
         - "3000:3000"
       networks: 
